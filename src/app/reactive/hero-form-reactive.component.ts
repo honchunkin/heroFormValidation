@@ -15,6 +15,8 @@ export class HeroFormReactiveComponent implements OnInit {
 
   heroForm: FormGroup;
 
+  // checkOption3: boolean;
+
   ngOnInit(): void {
     this.heroForm = new FormGroup({
       'option1': new FormControl(this.hero.option1),
@@ -29,7 +31,25 @@ export class HeroFormReactiveComponent implements OnInit {
       'alterEgo': new FormControl(this.hero.alterEgo),
       'power': new FormControl(this.hero.power, Validators.required)
     });
+    // this.refreshOption3();
   }
+
+  /* Since ngOnInit lifeCycle only compile at the first time, so wait for further discussion
+refreshOption3(): void {
+  console.log('hi');
+  if (this.option4.dirty) {
+    if (this.option3.value !== '') {
+      this.checkOption3 = false;
+    } else if (this.option4.value !== '') {
+      this.checkOption3 = true;
+    } else {
+      this.checkOption3 = false;
+    }
+  } else {
+    this.checkOption3 = false;
+  }
+}
+*/
 
   // getter method used to create an shorthand way in validation
   get option1() { return this.heroForm.get('option1'); }
@@ -79,25 +99,6 @@ export class HeroFormReactiveComponent implements OnInit {
       return false;
     }
   }
-
-  /* for further development
-checkOption3: boolean;
-
-refreashoption3(): void {
-
-  console.log('abc');
-  if (this.option4.dirty) {
-    if (this.option4.value !== '') {
-      this.checkOption3 = true;
-    } else {
-      return false;
-    }
-  } else {
-    return false;
-  }
-
-}
-*/
 
   get name() { return this.heroForm.get('name'); }
 
