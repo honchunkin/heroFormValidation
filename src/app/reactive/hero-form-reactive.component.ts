@@ -39,7 +39,10 @@ export class HeroFormReactiveComponent implements OnInit {
 
   get checkOption1() {
     if (this.option2.dirty || this.option3.dirty || this.option4.dirty) {
-      if (this.option2.value !== '' || this.option3.value !== '' || this.option4.value !== '') {
+      // to break the checkOption1(), thereby hidden the error msg while option1 has value but another input field doesn't have value.
+      if (this.option1.value !== '') {
+        return false;
+      } else if (this.option2.value !== '' || this.option3.value !== '' || this.option4.value !== '') {
         return true;
       } else {
         return false;
@@ -51,7 +54,9 @@ export class HeroFormReactiveComponent implements OnInit {
 
   get checkOption2() {
     if (this.option3.dirty || this.option4.dirty) {
-      if (this.option3.value !== '' || this.option4.value !== '') {
+      if (this.option2.value !== '') {
+        return false;
+      } else if (this.option3.value !== '' || this.option4.value !== '') {
         return true;
       } else {
         return false;
@@ -63,7 +68,9 @@ export class HeroFormReactiveComponent implements OnInit {
 
   get checkOption3() {
     if (this.option4.dirty) {
-      if (this.option4.value !== '') {
+      if (this.option3.value !== '') {
+        return false;
+      } else if (this.option4.value !== '') {
         return true;
       } else {
         return false;

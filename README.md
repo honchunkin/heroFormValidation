@@ -1,5 +1,8 @@
 # HeroFormValidation
 > can validate the options 1 to 4 by shown an error message.
+### version
+#### v1.0
+> fully validate the options 1 - 4 by shown an dynamic error message.
 
 # HereFormReactive
 
