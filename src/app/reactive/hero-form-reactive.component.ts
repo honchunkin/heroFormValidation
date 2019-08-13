@@ -39,7 +39,11 @@ export class HeroFormReactiveComponent implements OnInit {
 
   get checkOption1() {
     if (this.option2.dirty || this.option3.dirty || this.option4.dirty) {
-      return true;
+      if (this.option2.value !== '' || this.option3.value !== '' || this.option4.value !== '') {
+        return true;
+      } else {
+        return false;
+      }
     } else {
       return false;
     }
@@ -47,7 +51,11 @@ export class HeroFormReactiveComponent implements OnInit {
 
   get checkOption2() {
     if (this.option3.dirty || this.option4.dirty) {
-      return true;
+      if (this.option3.value !== '' || this.option4.value !== '') {
+        return true;
+      } else {
+        return false;
+      }
     } else {
       return false;
     }
@@ -55,11 +63,34 @@ export class HeroFormReactiveComponent implements OnInit {
 
   get checkOption3() {
     if (this.option4.dirty) {
-      return true;
+      if (this.option4.value !== '') {
+        return true;
+      } else {
+        return false;
+      }
     } else {
       return false;
     }
   }
+
+  /* for further development
+checkOption3: boolean;
+
+refreashoption3(): void {
+
+  console.log('abc');
+  if (this.option4.dirty) {
+    if (this.option4.value !== '') {
+      this.checkOption3 = true;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
+
+}
+*/
 
   get name() { return this.heroForm.get('name'); }
 
