@@ -21,7 +21,7 @@ export class HeroFormReactiveComponent implements OnInit {
     this.heroForm = new FormGroup({
       'option1': new FormControl(this.hero.option1),
       'option2': new FormControl(this.hero.option2),
-      'option3': new FormControl(this.hero.option3),
+      'option3': new FormControl(this.hero.option3), // Validators.required
       'option4': new FormControl(this.hero.option4),
       'name': new FormControl(this.hero.name, [
         Validators.required,
@@ -32,6 +32,7 @@ export class HeroFormReactiveComponent implements OnInit {
       'power': new FormControl(this.hero.power, Validators.required)
     });
     // this.refreshOption3();
+    console.log('init');
   }
 
   /* Since ngOnInit lifeCycle only compile at the first time, so wait for further discussion
@@ -63,6 +64,11 @@ refreshOption3(): void {
       if (this.option1.value !== '') {
         return false;
       } else if (this.option2.value !== '' || this.option3.value !== '' || this.option4.value !== '') {
+        // this.option1.setValidators(Validators.required);
+        let d = new Date();
+        let n = d.getMilliseconds();
+        console.log('option1 is required ' + n);
+        console.log(this.option1.errors);
         return true;
       } else {
         return false;
@@ -77,6 +83,12 @@ refreshOption3(): void {
       if (this.option2.value !== '') {
         return false;
       } else if (this.option3.value !== '' || this.option4.value !== '') {
+        this.option2.setValidators(Validators.required);
+        this.option2.updateValueAndValidity();
+        let d = new Date();
+        let n = d.getMilliseconds();
+        console.log('option2 is required ' + n);
+        console.log(this.option2.errors);
         return true;
       } else {
         return false;
@@ -91,6 +103,12 @@ refreshOption3(): void {
       if (this.option3.value !== '') {
         return false;
       } else if (this.option4.value !== '') {
+        this.option3.setValidators(Validators.required);
+        this.option3.updateValueAndValidity();
+        let d = new Date();
+        let n = d.getMilliseconds();
+        console.log('option3 is required ' + n);
+        console.log(this.option3.errors);
         return true;
       } else {
         return false;
@@ -103,6 +121,14 @@ refreshOption3(): void {
   get name() { return this.heroForm.get('name'); }
 
   get power() { return this.heroForm.get('power'); }
+
+  onSubmit() {
+    // TODO: Use EventEmitter with form value
+    if (this.heroForm.invalid) {
+      return;
+    }
+    console.warn(this.heroForm.value);
+  }
 }
 
 
