@@ -7,3 +7,5 @@ Support the validation of the options 1 to 4 by showing an error message.
 > Supported required function prototype 
 #### v1.2
 > Fully Supported at least 1 input and required function
+#### v1.3
+> Supported Observable mapping with [at least 1 input] function 

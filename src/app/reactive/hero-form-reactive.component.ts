@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { forbiddenNameValidator } from '../shared/forbidden-name.directive';
 import { invalid } from '@angular/compiler/src/render3/view/util';
+import { Observable } from 'rxjs';
+import { merge } from 'rxjs';
 
 @Component({
   selector: 'app-hero-form-reactive',
@@ -12,8 +14,10 @@ export class HeroFormReactiveComponent implements OnInit {
 
   powers = ['Really Smart', 'Super Flexible', 'Weather Changer'];
 
-  hero = { option1: '', option2: '', option3: '', option4: '', input1: '',
-  input2: '', input3: '', name: 'Dr.', alterEgo: 'Dr. What', power: this.powers[0] };
+  hero = {
+    option1: '', option2: '', option3: '', option4: '', input1: '',
+    input2: '', input3: '', name: 'Dr.', alterEgo: 'Dr. What', power: this.powers[0]
+  };
 
   heroForm: FormGroup;
 
@@ -37,9 +41,13 @@ export class HeroFormReactiveComponent implements OnInit {
       alterEgo: new FormControl(this.hero.alterEgo),
       power: new FormControl(this.hero.power, Validators.required)
     });
-    // this.refreshOption3();
+
     console.log('init');
+    this.refreshInput();
+    // this.refreshOption3();
   }
+
+
 
   /* Since ngOnInit lifeCycle only compile at the first time, so wait for further discussion
 refreshOption3(): void {
@@ -131,6 +139,7 @@ refreshOption3(): void {
     }
   }
 
+  /*
   get checkInput() {
     if ((this.input1.value === '') && (this.input2.value === '') && (this.input3.value === '')) {
       this.isInput = false;
@@ -141,6 +150,38 @@ refreshOption3(): void {
       // console.log('isInput: ' + this.isInput);
       return false;
     }
+  }
+  */
+
+  /*
+  on or before angular v.6
+  Observable.merge(
+    [ control1.valueChanges,
+      control2.valueChanges ]
+  ).subscribe(() => {
+    // do your computation
+  });
+  after v.6
+  merge(...)
+  */
+
+  refreshInput(): void {
+    console.log('refreshInput()');
+    /*
+    this.input1.valueChanges.subscribe( val => {
+      console.log('input1 changed + ' + val);
+    });
+    */
+    const merged = merge(this.input1.valueChanges, this.input2.valueChanges, this.input3.valueChanges);
+    console.log(merged);
+    merged.subscribe(val => {
+      if ((this.input1.value === '') && (this.input2.value === '') && (this.input3.value === '')) {
+        this.isInput = false;
+      } else {
+        this.isInput = true;
+      }
+    });
+
   }
 
   get name() { return this.heroForm.get('name'); }
