@@ -111,6 +111,10 @@ refreshOption3(): void {
         console.log(this.option3.errors);
         return true;
       } else {
+        this.option2.clearValidators();
+        this.option3.clearValidators();
+        this.option2.updateValueAndValidity();
+        this.option3.updateValueAndValidity();
         return false;
       }
     } else {
