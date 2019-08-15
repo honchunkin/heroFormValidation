@@ -4,4 +4,6 @@ Support the validation of the options 1 to 4 by showing an error message.
 #### v1.0
 > the prototype of validate the options 1 - 4 by shown an dynamic error message.
 #### v1.1
-> Suppored required function prototype 
+> Supported required function prototype 
+#### v1.2
+> Fully Supported at least 1 input and required function

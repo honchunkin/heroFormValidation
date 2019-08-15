@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { forbiddenNameValidator } from '../shared/forbidden-name.directive';
+import { invalid } from '@angular/compiler/src/render3/view/util';
 
 @Component({
   selector: 'app-hero-form-reactive',
@@ -11,25 +12,30 @@ export class HeroFormReactiveComponent implements OnInit {
 
   powers = ['Really Smart', 'Super Flexible', 'Weather Changer'];
 
-  hero = { option1: '', option2: '', option3: '', option4: '', name: 'Dr.', alterEgo: 'Dr. What', power: this.powers[0] };
+  hero = { option1: '', option2: '', option3: '', option4: '', input1: '',
+  input2: '', input3: '', name: 'Dr.', alterEgo: 'Dr. What', power: this.powers[0] };
 
   heroForm: FormGroup;
 
   // checkOption3: boolean;
+  isInput: boolean;
 
   ngOnInit(): void {
     this.heroForm = new FormGroup({
-      'option1': new FormControl(this.hero.option1),
-      'option2': new FormControl(this.hero.option2),
-      'option3': new FormControl(this.hero.option3), // Validators.required
-      'option4': new FormControl(this.hero.option4),
-      'name': new FormControl(this.hero.name, [
+      option1: new FormControl(this.hero.option1),
+      option2: new FormControl(this.hero.option2),
+      option3: new FormControl(this.hero.option3), // Validators.required
+      option4: new FormControl(this.hero.option4),
+      input1: new FormControl(this.hero.input1),
+      input2: new FormControl(this.hero.input2),
+      input3: new FormControl(this.hero.input3),
+      name: new FormControl(this.hero.name, [
         Validators.required,
         Validators.minLength(4),
         forbiddenNameValidator(/bob/i) // <-- Here's how you pass in the custom validator.
       ]),
-      'alterEgo': new FormControl(this.hero.alterEgo),
-      'power': new FormControl(this.hero.power, Validators.required)
+      alterEgo: new FormControl(this.hero.alterEgo),
+      power: new FormControl(this.hero.power, Validators.required)
     });
     // this.refreshOption3();
     console.log('init');
@@ -57,6 +63,9 @@ refreshOption3(): void {
   get option2() { return this.heroForm.get('option2'); }
   get option3() { return this.heroForm.get('option3'); }
   get option4() { return this.heroForm.get('option4'); }
+  get input1() { return this.heroForm.get('input1'); }
+  get input2() { return this.heroForm.get('input2'); }
+  get input3() { return this.heroForm.get('input3'); }
 
   get checkOption1() {
     if (this.option2.dirty || this.option3.dirty || this.option4.dirty) {
@@ -122,12 +131,27 @@ refreshOption3(): void {
     }
   }
 
+  get checkInput() {
+    if ((this.input1.value === '') && (this.input2.value === '') && (this.input3.value === '')) {
+      this.isInput = false;
+      // console.log('isInput: ' + this.isInput);
+      return true;
+    } else {
+      this.isInput = true;
+      // console.log('isInput: ' + this.isInput);
+      return false;
+    }
+  }
+
   get name() { return this.heroForm.get('name'); }
 
   get power() { return this.heroForm.get('power'); }
 
   onSubmit() {
     // TODO: Use EventEmitter with form value
+    if (this.isInput === false) {
+      return;
+    }
     if (this.heroForm.invalid) {
       return;
     }
