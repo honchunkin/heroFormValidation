@@ -16,5 +16,5 @@ Support the validation of options 1 to 4 by showing an error message.
 #### v1.4
 > <s>Supported Observable mapping with [required checking] function </s>
 #### v1.5 
-> Supported Observable mapping with [required checking and at least 1 input] function
+> Supported Observable mapping with [required checking and at least 1 input] function <br/>
 > fixed bugs in v1.4
