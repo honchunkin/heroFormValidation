@@ -21,7 +21,10 @@ export class HeroFormReactiveComponent implements OnInit {
 
   heroForm: FormGroup;
 
-  // checkOption3: boolean;
+  checkOption1: boolean;
+  checkOption2: boolean;
+  checkOption3: boolean;
+
   isInput: boolean;
 
   ngOnInit(): void {
@@ -43,28 +46,12 @@ export class HeroFormReactiveComponent implements OnInit {
     });
 
     console.log('init');
+
+    this.refreshOption1();
+    this.refreshOption2();
+    this.refreshOption3();
     this.refreshInput();
-    // this.refreshOption3();
   }
-
-
-
-  /* Since ngOnInit lifeCycle only compile at the first time, so wait for further discussion
-refreshOption3(): void {
-  console.log('hi');
-  if (this.option4.dirty) {
-    if (this.option3.value !== '') {
-      this.checkOption3 = false;
-    } else if (this.option4.value !== '') {
-      this.checkOption3 = true;
-    } else {
-      this.checkOption3 = false;
-    }
-  } else {
-    this.checkOption3 = false;
-  }
-}
-*/
 
   // getter method used to create an shorthand way in validation
   get option1() { return this.heroForm.get('option1'); }
@@ -75,83 +62,87 @@ refreshOption3(): void {
   get input2() { return this.heroForm.get('input2'); }
   get input3() { return this.heroForm.get('input3'); }
 
-  get checkOption1() {
-    if (this.option2.dirty || this.option3.dirty || this.option4.dirty) {
-      // to break the checkOption1(), thereby hidden the error msg while option1 has value but another input field doesn't have value.
-      if (this.option1.value !== '') {
-        return false;
-      } else if (this.option2.value !== '' || this.option3.value !== '' || this.option4.value !== '') {
-        // this.option1.setValidators(Validators.required);
-        let d = new Date();
-        let n = d.getMilliseconds();
-        console.log('option1 is required ' + n);
-        console.log(this.option1.errors);
-        return true;
+  refreshOption1(): void {
+    // const mergedOption1 = merge(this.option2.valueChanges, this.option3.valueChanges, this.option4.valueChanges);
+    const mergedOption1 = merge(this.option1.valueChanges, this.option2.valueChanges, this.option3.valueChanges, this.option4.valueChanges);
+    mergedOption1.subscribe(val => {
+      if (this.option2.dirty || this.option3.dirty || this.option4.dirty) {
+        // to break the checkOption1(), thereby hidden the error msg while option1 has value but another input field doesn't have value.
+        if (this.option1.value !== '') {
+          this.checkOption1 = false;
+        } else if (this.option2.value !== '' || this.option3.value !== '' || this.option4.value !== '') {
+          // this.option1.setValidators(Validators.required);
+          let d = new Date();
+          let n = d.getMilliseconds();
+          console.log('option1 is required ' + n);
+          console.log(this.option1.errors);
+          this.checkOption1 = true;
+        } else {
+          this.checkOption1 = false;
+        }
       } else {
-        return false;
+        this.checkOption1 = false;
       }
-    } else {
-      return false;
-    }
+    });
   }
 
-  get checkOption2() {
-    if (this.option3.dirty || this.option4.dirty) {
-      if (this.option2.value !== '') {
-        return false;
-      } else if (this.option3.value !== '' || this.option4.value !== '') {
-        this.option2.setValidators(Validators.required);
-        this.option2.updateValueAndValidity();
-        let d = new Date();
-        let n = d.getMilliseconds();
-        console.log('option2 is required ' + n);
-        console.log(this.option2.errors);
-        return true;
+  refreshOption2(): void {
+    // const mergedOption2 = merge(this.option3.valueChanges, this.option4.valueChanges);
+    const mergedOption2 = merge(this.option1.valueChanges, this.option2.valueChanges, this.option3.valueChanges, this.option4.valueChanges);
+    mergedOption2.subscribe(() => {
+      if (this.option3.dirty || this.option4.dirty) {
+        if (this.option2.value !== '') {
+          this.checkOption2 = false; // X
+        } else if (this.option3.value !== '' || this.option4.value !== '') {
+          this.checkOption2 = true;
+          this.option2.setValidators(Validators.required);
+          // this.option2.updateValueAndValidity();
+          this.option2.patchValue(this.option2.value, {emitEvent: false} );
+          let d = new Date();
+          let n = d.getMilliseconds();
+          console.log('option2 is required ' + n);
+          console.log(this.option2.errors);
+        } else {
+          // this.option2.clearValidators();
+          // this.option2.patchValue(this.option2.value, {emitEvent: false} );
+          this.checkOption2 = false;
+        }
       } else {
-        return false;
+        this.checkOption2 = false;
       }
-    } else {
-      return false;
-    }
+    });
   }
 
-  get checkOption3() {
-    if (this.option4.dirty) {
-      if (this.option3.value !== '') {
-        return false;
-      } else if (this.option4.value !== '') {
-        this.option3.setValidators(Validators.required);
-        this.option3.updateValueAndValidity();
-        let d = new Date();
-        let n = d.getMilliseconds();
-        console.log('option3 is required ' + n);
-        console.log(this.option3.errors);
-        return true;
+  refreshOption3(): void {
+    const mergedOption3 = merge(this.option1.valueChanges, this.option2.valueChanges, this.option3.valueChanges, this.option4.valueChanges);
+    mergedOption3.subscribe(() => {
+      if (this.option4.dirty) {
+        if (this.option3.value !== '') {
+          this.checkOption3 = false;
+        } else if (this.option4.value !== '') {
+          this.option3.setValidators(Validators.required);
+          this.option3.patchValue(this.option3.value, {emitEvent: false} );
+          // this.option3.updateValueAndValidity();
+          let d = new Date();
+          let n = d.getMilliseconds();
+          console.log('option3 is required ' + n);
+          console.log(this.option3.errors);
+          this.checkOption3 = true;
+        } else {
+          this.option2.clearValidators();
+          this.option3.clearValidators();
+          // this.option2.updateValueAndValidity();
+          // this.option3.updateValueAndValidity();
+          this.option2.patchValue(this.option2.value, {emitEvent: false} );
+          this.option3.patchValue(this.option3.value, {emitEvent: false} );
+          this.checkOption3 = false;
+          console.log('clear');
+        }
       } else {
-        this.option2.clearValidators();
-        this.option3.clearValidators();
-        this.option2.updateValueAndValidity();
-        this.option3.updateValueAndValidity();
-        return false;
+        this.checkOption3 = false;
       }
-    } else {
-      return false;
-    }
+    });
   }
-
-  /*
-  get checkInput() {
-    if ((this.input1.value === '') && (this.input2.value === '') && (this.input3.value === '')) {
-      this.isInput = false;
-      // console.log('isInput: ' + this.isInput);
-      return true;
-    } else {
-      this.isInput = true;
-      // console.log('isInput: ' + this.isInput);
-      return false;
-    }
-  }
-  */
 
   /*
   on or before angular v.6
@@ -181,7 +172,6 @@ refreshOption3(): void {
         this.isInput = true;
       }
     });
-
   }
 
   get name() { return this.heroForm.get('name'); }
