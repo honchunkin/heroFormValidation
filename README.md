@@ -1,6 +1,6 @@
 # HeroFormValidation
 Support the validation of options 1 to 4 by showing an error message.
-## version
+## Version (Beta)
 #### v1.0
 > the prototype of validate the options 1 - 4 by showing a dynamic error message.
 #### v1.1
