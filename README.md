@@ -14,6 +14,7 @@ Support the validation of options 1 to 4 by showing an error message.
 > <li>https://rxjs.dev/api/index/function/merge</li>
 > <li>https://stackoverflow.com/questions/50036609/how-to-watch-all-formcontrols-valuechanges-except-specific-control</li></ol> 
 #### v1.4
-> Supported Observable mapping with [required checking] function 
+> <s>Supported Observable mapping with [required checking] function </s>
 #### v1.5 
+> Supported Observable mapping with [required checking and at least 1 input] function
 > fixed bugs in v1.4
