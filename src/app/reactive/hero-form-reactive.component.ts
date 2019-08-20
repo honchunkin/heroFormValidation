@@ -103,8 +103,8 @@ export class HeroFormReactiveComponent implements OnInit {
           console.log('option2 is required ' + n);
           console.log(this.option2.errors);
         } else {
-          // this.option2.clearValidators();
-          // this.option2.patchValue(this.option2.value, {emitEvent: false} );
+          this.option2.clearValidators();
+          this.option2.patchValue(this.option2.value, {emitEvent: false} );
           this.checkOption2 = false;
         }
       } else {
@@ -139,7 +139,7 @@ export class HeroFormReactiveComponent implements OnInit {
           console.log('clear');
         }
       } else {
-        this.checkOption3 = false;
+          this.checkOption3 = false;
       }
     });
   }

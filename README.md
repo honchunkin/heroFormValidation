@@ -15,3 +15,5 @@ Support the validation of options 1 to 4 by showing an error message.
 > <li>https://stackoverflow.com/questions/50036609/how-to-watch-all-formcontrols-valuechanges-except-specific-control</li></ol> 
 #### v1.4
 > Supported Observable mapping with [required checking] function 
+#### v1.5 
+> fixed bugs in v1.4
