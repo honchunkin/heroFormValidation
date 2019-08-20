@@ -1,0 +1,18 @@
+<mat-tab-group>
+  <mat-tab label="ReactiveForm">
+    <!-- lazy loading -->
+      <ng-template matTabContent>
+          <app-hero-form-reactive></app-hero-form-reactive>
+        </ng-template>
+  </mat-tab>
+  <mat-tab label="Template">
+    <ng-template matTabContent>
+        <app-hero-form-template></app-hero-form-template>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="Third">
+    <ng-template matTabContent>
+      <app-hero-form-reactive></app-hero-form-reactive>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

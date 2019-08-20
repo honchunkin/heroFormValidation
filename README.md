@@ -18,3 +18,5 @@ Support the validation of options 1 to 4 by showing an error message.
 #### v1.5 
 > Supported Observable mapping with [required checking and at least 1 input] function <br/>
 > fixed bugs in v1.4
+#### v1.6
+> Supported routing prototype

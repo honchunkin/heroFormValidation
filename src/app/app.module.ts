@@ -1,24 +1,41 @@
-import { NgModule }      from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent }           from './app.component';
+import { AppComponent } from './app.component';
 import { HeroFormTemplateComponent } from './template/hero-form-template.component';
 import { HeroFormReactiveComponent } from './reactive/hero-form-reactive.component';
 import { ForbiddenValidatorDirective } from './shared/forbidden-name.directive';
+import { AppRoutingModule } from './app-routing.module';
+import { SelectItemComponent } from './select-item/select-item.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+
+/**Material library
+ * Ref: https://material.angular.io/guide/getting-started
+ */
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTabsModule} from '@angular/material/tabs';
+import { HelloWorldComponent } from './hello-world/hello-world.component';
 
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatTabsModule
   ],
   declarations: [
     AppComponent,
     HeroFormTemplateComponent,
     HeroFormReactiveComponent,
-    ForbiddenValidatorDirective
+    ForbiddenValidatorDirective,
+    SelectItemComponent,
+    NotFoundComponent,
+    HelloWorldComponent
   ],
   bootstrap:    [ AppComponent ]
 })
